@@ -7,6 +7,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LearnMethods", "LearnMethod
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TicTacToe", "TicTacToe\TicTacToe.csproj", "{0A81D64B-5AA3-4F99-98CF-A41AB42058A3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CardDealer", "DrawCards\CardDealer.csproj", "{005BDD0C-5DC5-43D7-9FB5-BC6C5D2E1567}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeckLibrary", "DeckLibrary\DeckLibrary.csproj", "{66C3D15D-55E9-459D-B86F-8F0EDFF501B8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +25,14 @@ Global
 		{0A81D64B-5AA3-4F99-98CF-A41AB42058A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0A81D64B-5AA3-4F99-98CF-A41AB42058A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0A81D64B-5AA3-4F99-98CF-A41AB42058A3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{005BDD0C-5DC5-43D7-9FB5-BC6C5D2E1567}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{005BDD0C-5DC5-43D7-9FB5-BC6C5D2E1567}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{005BDD0C-5DC5-43D7-9FB5-BC6C5D2E1567}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{005BDD0C-5DC5-43D7-9FB5-BC6C5D2E1567}.Release|Any CPU.Build.0 = Release|Any CPU
+		{66C3D15D-55E9-459D-B86F-8F0EDFF501B8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{66C3D15D-55E9-459D-B86F-8F0EDFF501B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{66C3D15D-55E9-459D-B86F-8F0EDFF501B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{66C3D15D-55E9-459D-B86F-8F0EDFF501B8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
