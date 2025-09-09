@@ -1,18 +1,18 @@
 ﻿// using System;
 
 // #1 the ourAnimals array will store the following: 
-string animalSpecies = "";
-string animalID = "";
-string animalAge = "";
-string animalPhysicalDescription = "";
-string animalPersonalityDescription = "";
-string animalNickname = "";
-string suggestedDonation = "";
+string animalSpecies = string.Empty;
+string animalID = string.Empty;
+string animalAge = string.Empty;
+string animalPhysicalDescription = string.Empty;
+string animalPersonalityDescription = string.Empty;
+string animalNickname = string.Empty;
+string suggestedDonation = string.Empty;
 
 // #2 variables that support data entry
 int maxPets = 8;
 string? readResult;
-string menuSelection = "";
+string menuSelection = string.Empty;
 decimal decimalDonation = 0.00m;
 
 // #3 array used to store runtime data, there is no persisted data
@@ -56,22 +56,22 @@ for (int i = 0; i < maxPets; i++)
         case 3:
             animalSpecies = "cat";
             animalID = "c4";
-            animalAge = "";
-            animalPhysicalDescription = "";
-            animalPersonalityDescription = "";
+            animalAge = string.Empty;
+            animalPhysicalDescription = string.Empty;
+            animalPersonalityDescription = string.Empty;
             animalNickname = "lion";
-            suggestedDonation = "";
+            suggestedDonation = string.Empty;
 
             break;
 
         default:
-            animalSpecies = "";
-            animalID = "";
-            animalAge = "";
-            animalPhysicalDescription = "";
-            animalPersonalityDescription = "";
-            animalNickname = "";
-            suggestedDonation = "";
+            animalSpecies = string.Empty;
+            animalID = string.Empty;
+            animalAge = string.Empty;
+            animalPhysicalDescription = string.Empty;
+            animalPersonalityDescription = string.Empty;
+            animalNickname = string.Empty;
+            suggestedDonation = string.Empty;
             break;
 
     }
@@ -131,9 +131,9 @@ do
         case "2":
             // Display all dogs with a specified characteristic");
 
-            string dogCharacteristic = "";
+            string dogCharacteristic = string.Empty;
 
-            while (dogCharacteristic == "")
+            while (dogCharacteristic == string.Empty)
             {
                 // have the user enter physical characteristics to search for
                 Console.WriteLine($"\nEnter one desired dog characteristics to search for");
@@ -145,7 +145,7 @@ do
             }
 
             bool noMatchesDog = true;
-            string dogDescription = "";
+            string dogDescription = string.Empty;
 
             // #6 loop through the ourAnimals array to search for matching animals
             for (int i = 0; i < maxPets; i++)
