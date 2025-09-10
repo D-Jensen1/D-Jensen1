@@ -10,4 +10,7 @@ string[] deck = Deck.GenerateDeck();
 Console.OutputEncoding = Encoding.UTF8;
 
 Console.WriteLine(string.Join(", ",randomCards));
+Console.WriteLine("Press Enter to close the window...");
+Console.ReadLine();
+
 

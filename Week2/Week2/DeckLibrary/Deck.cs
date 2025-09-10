@@ -59,7 +59,7 @@ namespace DeckLibrary
             for (int i = 0; i < num; i++)
             {
                 int rand = card.Next(0, 52);
-                randomCards[i] = deck[num];
+                randomCards[i] = deck[rand];
 
             }
             return randomCards;
