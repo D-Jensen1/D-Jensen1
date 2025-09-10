@@ -1,17 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <OutputType>Exe</OutputType>
     <TargetFramework>net9.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\DeckLibrary\DeckLibrary.csproj" />
-    <ProjectReference Include="..\RotateText\RotateTextLibrary.csproj" />
-	<PackageReference Include="Spectre.Console" Version="0.51.1" />
-  </ItemGroup>
 
   <ItemGroup>
     <None Update="isometric1.flf">
@@ -26,6 +19,7 @@
     <None Update="isometric4.flf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+	  <PackageReference Include="Spectre.Console" Version="0.51.1" />
   </ItemGroup>
 
 </Project>

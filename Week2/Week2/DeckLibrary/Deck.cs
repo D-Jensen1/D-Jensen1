@@ -29,11 +29,11 @@ namespace DeckLibrary
                         cardUnicode = 0x1F0B0;
                         break;
                     case 2:
-                        //
+                        //Diamonds
                         cardUnicode = 0x1F0C0;
                         break;
                     case 3:
-
+                        //Clubs
                         cardUnicode = 0x1F0D0;
                         break;
                     default:
@@ -85,7 +85,7 @@ namespace DeckLibrary
         {
             string[] result = deck[0..v];
             string[] newDeck = new string[deck.Length - v];
-            Array.Copy(deck, v, newDeck, 0, v);
+            Array.Copy(deck, v, newDeck, 0, 52 - v);
             deck = newDeck;
             return result;
         }
