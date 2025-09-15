@@ -7,6 +7,21 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="100"/>
+            <ColumnDefinition Width="500"/>
+            <ColumnDefinition Width="200"/>
+        </Grid.ColumnDefinitions>
+        <TextBlock Text="Hello World" Grid.Column="1"></TextBlock>
+        <Calendar Grid.Column="2"></Calendar>
+        <DockPanel Grid.Column="1">
+            <TextBox DockPanel.Dock="Right" Text="IamTextBox"></TextBox>
+        </DockPanel>
+        <StackPanel Grid.Column="0">
+            <Label Name ="lblItem" Content="ItemLabel"></Label>
+            <Button Name="btnTest" Click="btnTest_Click">Test Button</Button>
+            
+        </StackPanel>
+        
     </Grid>
 </Window>
