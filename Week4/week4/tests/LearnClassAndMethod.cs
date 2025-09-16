@@ -193,5 +193,11 @@ namespace tests
             }
             CollectionAssert.AreEqual(new int[] { 1, 2, 3, 4, 5, 10 }, resultArray);
         }
+
+        [TestMethod]
+        public void test()
+        {
+            
+        }
     }   
 }
