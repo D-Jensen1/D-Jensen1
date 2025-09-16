@@ -324,4 +324,33 @@ public class ListTest
             return -(x.CompareTo(y));
         }
     }
+
+
+    [TestMethod]
+    public void DeduplicateTest()
+    {
+        List<string> names = ["Ada", "Alan", "Grace", "ada", "ADA", "Grace"];
+        //compare ignore case
+        HashSet<string> uniqueNames = new(names,StringComparer.OrdinalIgnoreCase);
+        
+        foreach (var item in uniqueNames)
+        {
+            Debug.WriteLine(item);
+        }
+    }
+
+    [TestMethod]
+    public void RemoveElementsFromList()
+    {
+        var sequence = Enumerable.Range(100, 50).ToList(); //100,101,102,103...149
+        Assert.IsTrue(sequence.Count == 50);
+        Assert.AreEqual(100, sequence[0]);
+
+        // remove all elements that are a multiple of 5
+        sequence.RemoveAll(x => x % 5 == 0);
+        Assert.IsTrue(sequence.Count == 40);
+        Assert.AreEqual(101, sequence[0]);
+        Assert.IsTrue(sequence.TrueForAll(i => i % 5 != 0));
+
+    }
 }
