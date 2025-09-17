@@ -42,6 +42,45 @@ public class LinkedListTest
         Debug.Print(lazyNode!.Previous!.Previous!.Value);
     }
 
+    [TestMethod]
+    public void ReverseLinkedListChallenge()
+    {
+        //cannot use stack
+        //cannot duplicate LinkedListNode
+        //cannot create a wrapper
+
+        LinkedList<string> starterList = new LinkedList<string>(["apple", "banana", "cherry", "pear"]);
+/*        LinkedListNode<string> firstNode = starterList.First;
+        //LinkedListNode<string> lastNode = starterList.Last;
+
+        //starterList.Remove(lastNode);
+        //starterList.AddFirst(lastNode);
+        do
+        {
+            LinkedListNode<string> nextNode = firstNode.Next;
+            starterList.AddBefore(starterList.First, nextNode);
+
+        } while (starterList.Last != firstNode);
+*/
+        LinkedList<string> reversedStarterList = new LinkedList<string>();
+
+        for (int i = 0; i < starterList.Count; i++)
+        {
+            reversedStarterList.AddLast(starterList.Last.Value);
+
+            starterList.AddFirst(starterList.Last);
+        }
+/*
+        foreach (var node in starterList)
+        {
+            reversedStarterList.AddFirst(node);
+        }
+*/
+        // starterList.First == pear
+        // starterLast.Last == apple
+        PrintList<string>(reversedStarterList);
+    }
+
     private void PrintList<T>(LinkedList<T> theList)
     {
         if (theList.First is null) return;
@@ -53,4 +92,6 @@ public class LinkedListTest
             aNode = aNode.Next!;
         } while (aNode is not null);
     }
+
+    
 }
