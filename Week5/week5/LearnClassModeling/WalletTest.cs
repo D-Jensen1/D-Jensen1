@@ -7,7 +7,8 @@ using System.Threading.Tasks;
 
 namespace LearnClassModeling
 {
-    internal class WalletTest
+    [TestClass]
+    public class WalletTest
     {
         [TestMethod]
         public void DefaultConstructorHas0Bills()
@@ -70,6 +71,60 @@ namespace LearnClassModeling
             Wallet w = new(bills);
             w.RemoveBill(new Bill(Denomination.Ten));
             Assert.AreEqual(new Bill(Denomination.Twenty), w.Bills[0]);
+        }
+
+        [TestMethod]
+        public void HandleWalletEventTest()
+        {
+            int testAmount = 0;
+            Wallet w = new();
+            // This wires W_BillAdded to respond the BillAdded event of w
+            //w.BillAdded += W_BillAdded; 
+            w.BillAdded += (aWallet, bill) => testAmount += bill.Amount; //Lemda shorthand to avoid outside method
+            
+            w.BillRemoved += (aWallet, bill) => testAmount -= bill.Amount;
+            w.AddBill(new Bill(Denomination.Five));
+            Assert.AreEqual(5, testAmount);
+
+            w.AddBill(new Bill(Denomination.Five));
+            Assert.AreEqual(10, testAmount);
+
+            w.RemoveBill(new Bill(Denomination.Five));
+            Assert.AreEqual(5, testAmount);
+        }
+        /*
+                private int test = 0;
+                private void W_BillRemoved(Bill bill)
+                {
+                    test -= bill.Amount;
+
+                }
+
+                private void W_BillAdded(Bill bill)
+                {
+                    test += bill.Amount;
+                }
+        */
+        [TestMethod]
+        public void GenericDelegateTest()
+        {
+            // Final parameter of Func<> is the return type
+            Func<int, int, string> tester =
+                (x, y) => (x + y).ToString();
+
+            DemoMethod(tester);
+            Assert.IsTrue("10" == tester.Invoke(5, 5));
+        }
+
+        private void DemoMethod(Func<int, int, string> tester)
+        {
+            Assert.AreEqual("8", tester.Invoke(5, 3));
+        }
+
+        [TestMethod]
+        public void DictionaryIndexTest()
+        {
+
         }
     }
 }
