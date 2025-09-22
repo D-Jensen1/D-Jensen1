@@ -198,7 +198,8 @@ namespace tests
         [TestMethod]
         public void test()
         {
-            
+           // string test = "30,3.5,600";
+            //decimal[] testArr = decimal.TryParse(test.Split(',').ToArray());
         }
     }   
 }

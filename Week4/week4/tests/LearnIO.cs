@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using System.IO.Compression;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -114,13 +115,39 @@ public class LearnIO
         Assert.AreEqual(long.MaxValue, reader.ReadInt64());
         Assert.AreEqual(42, aStream.Length);
         aStream.Close();
+    }
 
-
-
-        //BinaryReader reader = new BinaryReader(aStream);
-
-
+    [TestMethod]
+    public void StreamReaderWriterToCompressedFileStream()
+    {
         // Stream Reader/Writer provides text writing helper methods
 
+        string textFileName = "textRW.txt";
+        string compressedFileName = "textRW.bin";
+
+        string directory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+        string textFilePath = Path.Combine(directory, textFileName);
+        string compressedfilePath = Path.Combine(directory, compressedFileName);
+
+        Stream textStream = new FileStream(textFilePath, FileMode.OpenOrCreate); // normal file based stream
+        Stream compressedStream =
+            new GZipStream(
+                new FileStream(compressedfilePath, FileMode.OpenOrCreate),
+                CompressionLevel.SmallestSize);// wraps normal file based stream inside of compression stream
+
+        StreamWriter textWriter = new StreamWriter(textStream);
+        StreamWriter zipWriter = new StreamWriter(compressedStream);
+        for (int i = 0; i < 100000; i++)
+        {
+            string line = $"Hello World -- {i}";
+            textWriter.WriteLine(line);
+            zipWriter.WriteLine(line);
+        }
+        //textWriter.Close();
+        Debug.WriteLine($"file size {textStream.Length} bytes");
+        textStream.Close();
+
+        //Debug.WriteLine($"compressed size {compressedStream.Length} bytes");
+        compressedStream.Close();
     }
 }
