@@ -31,6 +31,8 @@ namespace WalletLibrary.Models // namespace follows folder structure
         public List<ID> IDs => this._ids;
         public List<Card> Cards => this._cards;
 
+        public int CardCount { get => this._cards.Count; }
+
         // indexer property, uses bill to get number of bills for that denomination
         public int this[Bill b]
         {
@@ -113,6 +115,7 @@ namespace WalletLibrary.Models // namespace follows folder structure
             this._bills.Remove(bill);
             this.BillRemoved?.Invoke(this, bill);
         }
+
         public void RemoveBill(params IEnumerable<Bill> bills)
         {
             foreach (var bill in bills)
@@ -120,12 +123,42 @@ namespace WalletLibrary.Models // namespace follows folder structure
                 this.removeBill(bill);
             }
         }
+        private void addCard(Card card)
+        {
+            this.CardAdding?.Invoke(this, card);
+            this._cards.Add(card);
+            this.CardAdded?.Invoke(this, card);
+        }
+
+        public void AddCard(params IEnumerable<Card> cards)
+        {
+            if ((cards.Count() + this._cards.Count) > MAX_CARDS) throw new InvalidOperationException("Wallet is full");
+            foreach (var item in cards)
+            {
+                this.addCard(item);
+            }
+        }
+
+        public IEnumerable<Card> FindCardByPurpose(Purpose p)
+        {
+            foreach (var item in _cards)
+            {
+                if (item.GetPurpose().HasFlag(p))
+                {
+                    yield return item;
+                }
+            }
+        }
 
         // event
         //public event Action<Bill>? BillAdded;
         public event EventHandler<Bill> BillAdded; // EventHandler must pass (who it is(sender), information)
+        public event EventHandler<Card> CardAdding;
+        public event EventHandler<Card> CardAdded;
         // Action and function are two generic delegates that can model any event 
         public event EventHandler<Bill>? BillRemoved;
+        public event EventHandler<Card>? CardRemoving;
+        public event EventHandler<Card>? CardRemoved;
         // Action and function are two generic delegates that can model any event 
         // EventHandler<T> can model any event
     }
