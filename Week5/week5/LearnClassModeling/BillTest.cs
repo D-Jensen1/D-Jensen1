@@ -1,4 +1,4 @@
-﻿using LearnClassModeling.Models;
+﻿using WalletLibrary.Models;
 
 namespace LearnClassModeling
 {

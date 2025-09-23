@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LearnClassModeling.Models
+namespace WalletLibrary.Models
 {
-    internal class ID
+    public class ID
     {
     }
 }

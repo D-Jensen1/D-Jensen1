@@ -1,4 +1,4 @@
-using LearnClassModeling.Models;
+using WalletLibrary.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;

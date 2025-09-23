@@ -7,9 +7,9 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LearnClassModeling.Models // namespace follows folder structure
+namespace WalletLibrary.Models // namespace follows folder structure
 {
-    internal class Wallet
+    public class Wallet
     {
         private const int MAX_CARDS = 20;
         private const int MAX_BILLS = 100; 
@@ -28,8 +28,8 @@ namespace LearnClassModeling.Models // namespace follows folder structure
 
         public ImmutableList<Bill> Bills => this._bills.ToImmutableList(); // make the property return an immutable list so it cannot
                                                                            // be used to modify wallet's _bill internal state
-        internal List<ID> IDs => this._ids;
-        internal List<Card> Cards => this._cards;
+        public List<ID> IDs => this._ids;
+        public List<Card> Cards => this._cards;
 
         public int this[Bill b]
         {
@@ -87,14 +87,14 @@ namespace LearnClassModeling.Models // namespace follows folder structure
         }
 
 
-        internal void AddBill(Bill bill)
+        public void AddBill(Bill bill)
         {
             if (this._bills.Count >= MAX_BILLS) throw new ArgumentException("Stack is too fat");
             this._bills.Add(bill);
             this.BillAdded?.Invoke(this, bill);
         }
 
-        internal void AddBills(IEnumerable<Bill> bills)
+        public void AddBills(IEnumerable<Bill> bills)
         {
             if (this._bills.Count + bills.Count() >= MAX_BILLS) throw new ArgumentException("Stack is too fat");
             //this._bills.AddRange(bills);
@@ -104,12 +104,12 @@ namespace LearnClassModeling.Models // namespace follows folder structure
             }
         }
 
-        internal void SortBill()
+        public void SortBill()
         {
             this._bills.Sort();
         }
 
-        internal void RemoveBill(Bill bill)
+        public void RemoveBill(Bill bill)
         {
             this._bills.Remove(bill);
             this.BillRemoved?.Invoke(this, bill);

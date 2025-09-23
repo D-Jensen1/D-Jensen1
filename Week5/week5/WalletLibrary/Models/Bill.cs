@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LearnClassModeling.Models
+namespace WalletLibrary.Models
 {
-    internal class Bill : IComparable<Bill> 
+    public class Bill : IComparable<Bill> 
     {
         private Denomination _denomination;
 
@@ -18,10 +18,10 @@ namespace LearnClassModeling.Models
             //get => (int)this._denomination;
         }
         */
-        internal int Amount => (int)this._denomination; // shorthand of the above constructor
+        public int Amount => (int)this._denomination; // shorthand of the above constructor
         // Add read only Denomination property, type of Denomination Enum
-        internal Denomination Denomination => this._denomination;
-        internal string Portrait
+        public Denomination Denomination => this._denomination;
+        public string Portrait
        {
             get
             {
@@ -48,7 +48,7 @@ namespace LearnClassModeling.Models
        }
         
         // Constructor method does not have a return type
-        internal Bill(Denomination _denom)
+        public Bill(Denomination _denom)
         {
             this._denomination = _denom;
         }
