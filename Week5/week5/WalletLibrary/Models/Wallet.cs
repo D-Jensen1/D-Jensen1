@@ -31,12 +31,15 @@ namespace WalletLibrary.Models // namespace follows folder structure
         public List<ID> IDs => this._ids;
         public List<Card> Cards => this._cards;
 
+        // indexer property, uses bill to get number of bills for that denomination
         public int this[Bill b]
         {
             get
             {
-                if (_billCounter.ContainsKey(b)) return _billCounter[b];
-                else return 0;
+                if (_billCounter.ContainsKey(b)) 
+                    return _billCounter[b];
+                else 
+                    return 0;
             }
         }
 
@@ -63,6 +66,8 @@ namespace WalletLibrary.Models // namespace follows folder structure
         }
     */
         // method
+
+        // default constructor
         public Wallet() 
         {
             // wire up event handlers
@@ -70,6 +75,7 @@ namespace WalletLibrary.Models // namespace follows folder structure
             {
                 if (_billCounter.ContainsKey(b)) _billCounter[b] += 1;
                 else _billCounter.Add(b, 1);
+                _bills.Sort();
             };
 
             this.BillRemoved += (w, b) =>
@@ -78,42 +84,41 @@ namespace WalletLibrary.Models // namespace follows folder structure
             };
         }
 
-        public Wallet(IEnumerable<Bill> bills) : this() // Constructor chaining
+        public Wallet(params IEnumerable<Bill> bills) : this() // Constructor chaining
         {
-            foreach (var bill in bills)
-            {
-                this.AddBill(bill);
-            }
+            this.AddBill(bills);
         }
 
 
-        public void AddBill(Bill bill)
+        private void addBill(Bill bill)
         {
-            if (this._bills.Count >= MAX_BILLS) throw new ArgumentException("Stack is too fat");
             this._bills.Add(bill);
             this.BillAdded?.Invoke(this, bill);
         }
 
-        public void AddBills(IEnumerable<Bill> bills)
+        public void AddBill(params IEnumerable<Bill> bills) // params will turn any input into IEnumerable<Bill>
         {
             if (this._bills.Count + bills.Count() >= MAX_BILLS) throw new ArgumentException("Stack is too fat");
             //this._bills.AddRange(bills);
             foreach (var bill in bills)
             {
-                this.AddBill(bill);
+                this.addBill(bill);
             }
         }
 
-        public void SortBill()
+        private void removeBill(Bill bill)
         {
-            this._bills.Sort();
-        }
-
-        public void RemoveBill(Bill bill)
-        {
+            if (this._bills.Count(x => x == bill) == 0) 
+                throw new ArgumentException($"You don't have a {bill.Amount:C} bill.");
             this._bills.Remove(bill);
             this.BillRemoved?.Invoke(this, bill);
-
+        }
+        public void RemoveBill(params IEnumerable<Bill> bills)
+        {
+            foreach (var bill in bills)
+            {
+                this.removeBill(bill);
+            }
         }
 
         // event

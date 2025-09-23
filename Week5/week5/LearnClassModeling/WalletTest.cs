@@ -51,7 +51,7 @@ namespace LearnClassModeling
         {
             List<Bill> bills = [new Bill(Denomination.Ten), new Bill(Denomination.Twenty)];
             Wallet w = new(bills);
-            w.AddBills([new Bill(Denomination.Ten), new Bill(Denomination.Twenty)]);
+            w.AddBill(new Bill(Denomination.Ten), new Bill(Denomination.Twenty));
             Assert.AreEqual(4, w.Bills.Count);
         }
 
@@ -62,7 +62,6 @@ namespace LearnClassModeling
             Wallet w = new(bills);
             w.AddBill(new Bill(Denomination.Fifty));
             w.AddBill(new Bill(Denomination.Five));
-            w.SortBill();
             Assert.AreEqual(new Bill(Denomination.Five), w.Bills[0]);
             Assert.AreEqual(new Bill(Denomination.Ten), w.Bills[1]);
         }
