@@ -16,7 +16,7 @@ namespace LearnClassModeling
         public void DefaultConstructorHas0Bills()
         {
 
-            Wallet w = new();
+            WalletBill w = new();
             Assert.AreEqual(0, w.Bills.Count);
         }
 
@@ -24,7 +24,7 @@ namespace LearnClassModeling
         public void ConstructorAcceptsListOfBills()
         {
             List<Bill> bills = [new Bill(Denomination.Ten), new Bill(Denomination.Twenty)];
-            Wallet w = new(bills);
+            WalletBill w = new(bills);
             Assert.AreEqual(2, w.Bills.Count);
         }
 
@@ -32,7 +32,7 @@ namespace LearnClassModeling
         public void WalletComputesBillTotal()
         {
             List<Bill> bills = [new Bill(Denomination.Ten), new Bill(Denomination.Twenty)];
-            Wallet w = new(bills);
+            WalletBill w = new(bills);
             Assert.AreEqual(30, w.BillTotal);
         }
 
@@ -40,7 +40,7 @@ namespace LearnClassModeling
         public void WalletAddBill()
         {
             List<Bill> bills = [new Bill(Denomination.Ten), new Bill(Denomination.Twenty)];
-            Wallet w = new(bills);
+            WalletBill w = new(bills);
 
             w.AddBill(new Bill(Denomination.Fifty));
             Assert.AreEqual(3, w.Bills.Count);
@@ -50,7 +50,7 @@ namespace LearnClassModeling
         public void WalletAddListOfBill()
         {
             List<Bill> bills = [new Bill(Denomination.Ten), new Bill(Denomination.Twenty)];
-            Wallet w = new(bills);
+            WalletBill w = new(bills);
             w.AddBill(new Bill(Denomination.Ten), new Bill(Denomination.Twenty));
             Assert.AreEqual(4, w.Bills.Count);
         }
@@ -59,7 +59,7 @@ namespace LearnClassModeling
         public void WalletCanSortBill()
         {
             List<Bill> bills = [new Bill(Denomination.Ten), new Bill(Denomination.Twenty)];
-            Wallet w = new(bills);
+            WalletBill w = new(bills);
             w.AddBill(new Bill(Denomination.Fifty));
             w.AddBill(new Bill(Denomination.Five));
             Assert.AreEqual(new Bill(Denomination.Five), w.Bills[0]);
@@ -69,7 +69,7 @@ namespace LearnClassModeling
         public void WalletCanRemoveBill()
         {
             List<Bill> bills = [new Bill(Denomination.Ten), new Bill(Denomination.Twenty)];
-            Wallet w = new(bills);
+            WalletBill w = new(bills);
             w.RemoveBill(new Bill(Denomination.Ten));
             Assert.AreEqual(new Bill(Denomination.Twenty), w.Bills[0]);
         }
@@ -78,7 +78,7 @@ namespace LearnClassModeling
         public void HandleWalletEventTest()
         {
             int testAmount = 0;
-            Wallet w = new();
+            WalletBill w = new();
             // This wires W_BillAdded to respond the BillAdded event of w
             //w.BillAdded += W_BillAdded; 
             w.BillAdded += (aWallet, bill) => testAmount += bill.Amount; //Lemda shorthand to avoid outside method
@@ -110,7 +110,7 @@ namespace LearnClassModeling
         [TestMethod]
         public void BillCounterTest()
         {
-            Wallet w = new();
+            WalletBill w = new();
             var one = (new Bill(Denomination.One));
             var five = (new Bill(Denomination.Five));
             var ten = (new Bill(Denomination.Ten));
@@ -132,7 +132,7 @@ namespace LearnClassModeling
         [TestMethod]
         public void DemoLogger()
         {
-            Wallet w = new();
+            WalletBill w = new();
 
             w.BillAdded += (w, b) => Debug.WriteLine($"{b} is added to wallet");
             w.BillRemoved += (w, b) => Debug.WriteLine($"{b} is removed from wallet");
@@ -155,7 +155,7 @@ namespace LearnClassModeling
         [TestMethod]
         public void VerifiesWalletAmountIsCorrectUsingEventSubscribtion()
         {
-            Wallet w = new();
+            WalletBill w = new();
             int trackingTotal = 0;
 
             w.BillAdded += (wallet, b) => trackingTotal += b.Amount;
@@ -182,7 +182,7 @@ namespace LearnClassModeling
         [TestMethod]
         public void ReadOnlyPropertyIsntReadOnly()
         {
-            Wallet w = new();
+            WalletBill w = new();
 
             var one = (new Bill(Denomination.One));
             var five = (new Bill(Denomination.Five));

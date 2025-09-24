@@ -46,7 +46,16 @@ namespace WalletLibrary.Models
                 }
             }
        }
-        
+
+        public static Bill One => new Bill(Denomination.One);
+        public static Bill Two => new Bill(Denomination.Two);
+        public static Bill Five => new Bill(Denomination.Five);
+        public static Bill Ten => new Bill(Denomination.Ten);
+        public static Bill Twenty => new Bill(Denomination.Twenty);
+        public static Bill Fifty => new Bill(Denomination.Fifty);
+        public static Bill Hundred => new Bill(Denomination.Hundred);
+
+
         // Constructor method does not have a return type
         public Bill(Denomination _denom)
         {
