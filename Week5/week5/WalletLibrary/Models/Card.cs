@@ -8,19 +8,19 @@ namespace WalletLibrary.Models
 {
     public abstract class Card
     {
-        protected WalletBill? _wallet;
+        protected WalletCard? _walletCard;
         protected DateOnly _expirationDate;
         protected decimal? _balance;
         protected string? _accountID;
 
         public virtual bool Expired => DateOnly.FromDateTime(DateTime.Now) > _expirationDate;
         public virtual string? AccountID => _accountID;
-        public WalletBill? Wallet => _wallet;
+        public WalletCard? Wallet => _walletCard;
         //concrete
-        public void AddToWallet(WalletBill w)
+        public void AddToWallet(WalletCard w)
         {
             w.AddCard(this);
-            this._wallet = w;
+            this._walletCard = w;
         }
 
 

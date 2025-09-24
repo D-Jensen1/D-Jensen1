@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace WalletLibrary.Models // namespace follows folder structure
 {
-    public class WalletBill : ICollection<Bill>
+    public partial class WalletBill : ICollection<Bill>
     {
         #region Fields
         private const int MAX_CARDS = 20;
@@ -31,11 +31,8 @@ namespace WalletLibrary.Models // namespace follows folder structure
         // property - get/set method to access data
 
         public ImmutableList<Bill> Bills => this._bills.ToImmutableList(); // make the property return an immutable list so it cannot
-                                                                           // be used to modify wallet's _bill internal state
+                                                                           // be used to modify wallet's _bills internal state
         public List<ID> IDs => this._ids;
-        public List<Card> Cards => this._cards;
-
-        public int CardCount { get => this._cards.Count; }
 
         // indexer property, uses bill to get number of bills for that denomination
         public int this[Bill b]
@@ -128,32 +125,6 @@ namespace WalletLibrary.Models // namespace follows folder structure
             foreach (var bill in bills)
             {
                 this.removeBill(bill);
-            }
-        }
-        private void addCard(Card card)
-        {
-            this.CardAdding?.Invoke(this, card);
-            this._cards.Add(card);
-            this.CardAdded?.Invoke(this, card);
-        }
-
-        public void AddCard(params IEnumerable<Card> cards)
-        {
-            if ((cards.Count() + this._cards.Count) > MAX_CARDS) throw new InvalidOperationException("Wallet is full");
-            foreach (var item in cards)
-            {
-                this.addCard(item);
-            }
-        }
-
-        public IEnumerable<Card> FindCardByPurpose(Purpose p)
-        {
-            foreach (var item in _cards)
-            {
-                if (item.GetPurpose().HasFlag(p))
-                {
-                    yield return item;
-                }
             }
         }
         #endregion
