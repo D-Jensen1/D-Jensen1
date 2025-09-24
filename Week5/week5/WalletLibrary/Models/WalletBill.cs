@@ -11,10 +11,9 @@ using System.Threading.Tasks;
 
 namespace WalletLibrary.Models // namespace follows folder structure
 {
-    public partial class WalletBill : ICollection<Bill>
+    public partial class Wallet : ICollection<Bill>
     {
         #region Fields
-        private const int MAX_CARDS = 20;
         private const int MAX_BILLS = 100;
         private const int MAX_IDS = 10;
 
@@ -22,7 +21,6 @@ namespace WalletLibrary.Models // namespace follows folder structure
         // fields represent data - internal data, encapsulation
         private List<Bill> _bills = new();
         private List<ID> _ids = new();
-        private List<Card> _cards = new();
 
         private Dictionary<Bill, int> _billCounter = new();
         #endregion
@@ -62,7 +60,7 @@ namespace WalletLibrary.Models // namespace follows folder structure
         #endregion
 
         #region Constructors
-        public WalletBill()
+        public Wallet()
         {
             // wire up event handlers
             this.BillAdded += (w, b) =>
@@ -89,7 +87,7 @@ namespace WalletLibrary.Models // namespace follows folder structure
 
         }
 
-        public WalletBill(params IEnumerable<Bill> bills) : this() // Constructor chaining
+        public Wallet(params IEnumerable<Bill> bills) : this() // Constructor chaining
         {
             this.AddBill(bills);
         }
@@ -133,12 +131,8 @@ namespace WalletLibrary.Models // namespace follows folder structure
         // event
         //public event Action<Bill>? BillAdded;
         public event EventHandler<Bill> BillAdded; // EventHandler must pass (who it is(sender), information)
-        public event EventHandler<Card> CardAdding;
-        public event EventHandler<Card> CardAdded;
         // Action and function are two generic delegates that can model any event 
         public event EventHandler<Bill>? BillRemoved;
-        public event EventHandler<Card>? CardRemoving;
-        public event EventHandler<Card>? CardRemoved;
         // Action and function are two generic delegates that can model any event 
         // EventHandler<T> can model any event 
         #endregion

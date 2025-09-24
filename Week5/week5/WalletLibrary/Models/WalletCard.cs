@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace WalletLibrary.Models
 {
-    public partial class WalletCard : ICollection<Card>
+    public partial class Wallet : ICollection<Card>
     {
         #region Fields
         private const int MAX_CARDS = 20;
@@ -36,7 +36,7 @@ namespace WalletLibrary.Models
         #endregion
 
         #region Constructors
-        public WalletCard( List<Card>? cards = null)
+        public Wallet( List<Card>? cards = null)
         {
             this._cards = cards ?? new List<Card>();
         }
@@ -96,14 +96,14 @@ namespace WalletLibrary.Models
 
 
         #region IEnumerable - using System.Collections
-        IEnumerator IEnumerable.GetEnumerator() => this.Cards.GetEnumerator();
+        //IEnumerator IEnumerable.GetEnumerator() => this.Cards.GetEnumerator();
         #endregion
 
-        #region IEnumerable<Bill>  - using System.Collections.Generic
+        #region IEnumerable<Card>  - using System.Collections.Generic
         IEnumerator<Card> IEnumerable<Card>.GetEnumerator() => this.Cards.GetEnumerator();
         #endregion
 
-        #region ICollection<Bill>
+        #region ICollection<Card>
         int ICollection<Card>.Count => this._cards.Count;
         bool ICollection<Card>.IsReadOnly => true;
         void ICollection<Card>.Add(Card item)

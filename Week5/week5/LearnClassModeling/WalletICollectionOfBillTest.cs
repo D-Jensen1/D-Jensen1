@@ -9,7 +9,7 @@ public class WalletICollectionOfBillTest
     [TestMethod]
     public void TestIEnumerable()
     {
-        ICollection<Bill> tester = new WalletBill();
+        ICollection<Bill> tester = new Wallet();
         tester.Add(Bill.Fifty);
         tester.Add(Bill.Fifty);
         tester.Add(Bill.Fifty);
@@ -32,7 +32,7 @@ public class WalletICollectionOfBillTest
     [TestMethod]
     public void TestCountMember()
     {
-        ICollection<Bill> tester = new WalletBill();
+        ICollection<Bill> tester = new Wallet();
         tester.Add(Bill.Fifty);
         tester.Add(Bill.Fifty);
         tester.Add(Bill.Fifty);
@@ -42,14 +42,14 @@ public class WalletICollectionOfBillTest
     [TestMethod]
     public void TestIsReadOnlyMember()
     {
-        ICollection<Bill> tester = new WalletBill();
+        ICollection<Bill> tester = new Wallet();
         Assert.AreEqual(true, tester.IsReadOnly);
     }
 
     [TestMethod]
     public void TestAddMember()
     {
-        ICollection<Bill> tester = new WalletBill();
+        ICollection<Bill> tester = new Wallet();
         tester.Add(Bill.Fifty);
         tester.Add(Bill.Fifty);
         tester.Add(Bill.Fifty);
@@ -59,7 +59,7 @@ public class WalletICollectionOfBillTest
     [TestMethod]
     public void TestContainsMember()
     {
-        ICollection<Bill> tester = new WalletBill();
+        ICollection<Bill> tester = new Wallet();
         tester.Add(Bill.Fifty);
         tester.Add(Bill.Fifty);
         tester.Add(Bill.Fifty);
@@ -72,7 +72,7 @@ public class WalletICollectionOfBillTest
     [TestMethod]
     public void TestClearMember()
     {
-        ICollection<Bill> tester = new WalletBill();
+        ICollection<Bill> tester = new Wallet();
         tester.Add(Bill.Fifty);
         tester.Add(Bill.Fifty);
         tester.Add(Bill.Fifty);
@@ -84,7 +84,7 @@ public class WalletICollectionOfBillTest
     [TestMethod]
     public void TestCopyMember()
     {
-        ICollection<Bill> tester = new WalletBill();
+        ICollection<Bill> tester = new Wallet();
         tester.Add(Bill.One);
         tester.Add(Bill.Two);
         tester.Add(Bill.Fifty);
@@ -103,7 +103,7 @@ public class WalletICollectionOfBillTest
     [TestMethod]
     public void TestRemoveMember()
     {
-        ICollection<Bill> tester = new WalletBill();
+        ICollection<Bill> tester = new Wallet();
         tester.Add(Bill.One);
         tester.Add(Bill.Two);
         tester.Add(Bill.Fifty);

@@ -9,7 +9,7 @@ public class WalletCardsTest
     public void TestAdd5CardsToWalletWithCard()
     {
         //Arrange
-        var wallet = new WalletCard();
+        var wallet = new Wallet();
         var creditCard = new CreditCard("1234", 5000, DateOnly.FromDateTime(DateTime.Now.AddYears(2)));
         var debitCard = new DebitCard("5678", DateOnly.FromDateTime(DateTime.Now.AddYears(3)), 1000);
         var giftCard = new GiftCard(100, DateOnly.FromDateTime(DateTime.Now.AddMonths(6)));
@@ -31,7 +31,7 @@ public class WalletCardsTest
     public void TestAdd5CardsToWalletWithWallet()
     {
         //Arrange
-        var wallet = new WalletCard();
+        var wallet = new Wallet();
         var creditCard = new CreditCard("1234", 5000, DateOnly.FromDateTime(DateTime.Now.AddYears(2)));
         var debitCard = new DebitCard("5678", DateOnly.FromDateTime(DateTime.Now.AddYears(3)), 1000);
         var giftCard = new GiftCard(100, DateOnly.FromDateTime(DateTime.Now.AddMonths(6)));
@@ -51,7 +51,7 @@ public class WalletCardsTest
     public void TestFalgEnum()
     {
         //Arrange
-        var wallet = new WalletCard();
+        var wallet = new Wallet();
         var creditCard = new CreditCard("1234", 5000, DateOnly.FromDateTime(DateTime.Now.AddYears(2)));
         var debitCard = new DebitCard("5678", DateOnly.FromDateTime(DateTime.Now.AddYears(3)), 1000);
         var giftCard = new GiftCard(100, DateOnly.FromDateTime(DateTime.Now.AddMonths(6)));
@@ -74,7 +74,7 @@ public class WalletCardsTest
     public void TestFindCardsByPurpose()
     {
         //Arrange
-        var wallet = new WalletCard();
+        var wallet = new Wallet();
         var creditCard = new CreditCard("1234", 5000, DateOnly.FromDateTime(DateTime.Now.AddYears(2)));
         var bankCard = new BankCard("5678", DateOnly.FromDateTime(DateTime.Now.AddYears(3)), 1000);
         var giftCard = new GiftCard(100, DateOnly.FromDateTime(DateTime.Now.AddMonths(6)));
