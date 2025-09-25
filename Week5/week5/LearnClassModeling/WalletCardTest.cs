@@ -48,7 +48,7 @@ public class WalletCardsTest
     }
 
     [TestMethod]
-    public void TestFalgEnum()
+    public void TestFlagEnum()
     {
         //Arrange
         var wallet = new Wallet();

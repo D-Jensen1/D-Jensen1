@@ -16,12 +16,16 @@ namespace WalletLibrary.Models
         private List<Card> _cards = new();
 
         private Dictionary<Card, int> _cardCounter = new();
+        
+        public int CardCount { get => this._cards.Count; }
+        public ImmutableList<Card> Cards => this._cards.ToImmutableList();
+
         #endregion
 
         #region Properties
-        public ImmutableList<Card> Cards => this._cards.ToImmutableList(); 
 
-        public int CardCount { get => this._cards.Count; }
+
+        public IEnumerable<KeyValuePair<string, int>> CountByCardType => _cards.CountBy(c => c.GetType().Name);
 
         public int this[Card card]
         {
