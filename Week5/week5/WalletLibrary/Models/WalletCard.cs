@@ -23,8 +23,6 @@ namespace WalletLibrary.Models
         #endregion
 
         #region Properties
-
-
         public IEnumerable<KeyValuePair<string, int>> CountByCardType => _cards.CountBy(c => c.GetType().Name);
 
         public int this[Card card]

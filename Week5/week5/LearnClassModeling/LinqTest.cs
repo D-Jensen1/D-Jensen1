@@ -70,16 +70,50 @@ public class LinqTest
 
         Assert.AreEqual(true, result[1].Key);
         Assert.AreEqual(3, result[1].Value);
-        foreach (var item in result)
+
+    }
+
+    [TestMethod]
+    public void SelectTest()
+    {
+        ICollection<string> fruits = ["Apple", "Banana", "Orange", "Grapes", "Strawberry", "Blueberry", "Mango", "Pineapple", "Watermelon", "Peach"];
+        // (Apple, 5, A, e)
+        // (Banana, 6, B, a)
+
+        var myProjection = fruits.Select(s =>
+            new // new anonymous class
+            {
+                FruitName = s,
+                NameLength = s.Length,
+                FirstLetter = s[0],
+                MiddleLetter = s[s.Length/2],
+                LastLetter = s[^1]
+            }
+        );
+
+        foreach (var item in myProjection)
         {
-            Debug.WriteLine(item);
+            Debug.WriteLine($"{item.FruitName} has {item.NameLength} letters, first: {item.FirstLetter}, middle:{item.MiddleLetter}, last:{item.LastLetter}");
         }
     }
+
 
     [TestMethod]
     public void OrderByTest()
     {
-
+        ICollection<string> fruits = ["Apple", "Banana", "Orange", "Grapes", "Strawberry", "Blueberry", "Mango", "Pineapple", "Watermelon", "Peach"];
+        ICollection<string> expected = ["Apple",
+                                        "Mango",
+                                        "Peach",
+                                        "Banana",
+                                        "Orange",
+                                        "Grapes",
+                                        "Blueberry",
+                                        "Pineapple",
+                                        "Strawberry",
+                                        "Watermelon"];
+        CollectionAssert.AreEqual(expected.ToList(), fruits.OrderBy(s => s.Length).ToList());
+        Assert.AreEqual(10, fruits.OrderBy(s => s.Length).Debug().Count());
     }
 
     [TestMethod]
@@ -102,7 +136,18 @@ public class LinqTest
     public void ZipTest()
     {
 
+        IEnumerable<int> nums = Enumerable.Range(1,1000);
+        IEnumerable<string> names = nums.Select(n => n.ToString());
+
+        var result = nums.Zip(names);
+        // Zip combines nums and names into KeyValuePair with nums as keys and names as values
+        var finalResult = result.Take(5).Select(t => $"number {t.First} is zipped to lookup to {t.Second}");
+        finalResult.DebugPrint();
+        //var listResult = result.Debug().Skip(30).Take(5).ToList();
+        
+        //Assert.AreEqual((1, "one"), result.First());
     }
+
 
     [TestMethod]
     public void ExceptByTest()
@@ -131,6 +176,64 @@ public class LinqTest
             Debug.WriteLine(item);
         }
     }
+
+    [TestMethod]
+    public void DateGenerationTest()
+    {
+        IEnumerable<int> nums = Enumerable.Range(1, 1000);
+        IEnumerable<DateTime> dates = nums.Select(n => DateTime.Now.AddDays(n));
+
+        var result = nums.Zip(dates);
+        var finalResult = result.Take(10).Select(t => $"Number {t.First} is zipped to the date {t.Second}");
+        finalResult.DebugPrint();
+
+
+    }
+
+    [TestMethod]
+    public void GroupingTestWithInt()
+    {
+        IEnumerable<int> nums = Enumerable.Range(1, 1000);
+
+        // groups numbers into 100 number intervals (0-99 = 0, 100-199 = 1)
+        var groupResult = nums.GroupBy(n => n / 100);
+        foreach (IGrouping<int,int> aGroup in groupResult)
+        {
+            Debug.Print($"The key is {aGroup.Key}, Avg: {aGroup.Average()}, Min: {aGroup.Min()}");
+            
+            //foreach (var memeber in aGroup)
+            //{
+            //    Debug.Print($"\t{memeber}");
+            //}
+        }
+    }
+
+    [TestMethod]
+    public void GroupingTestWithString()
+    {
+        ICollection<string> fruits = ["Apple", "Banana", "Orange", "Grapes", "Strawberry", "Blueberry", "Mango", "Pineapple", "Watermelon", "Peach"];
+
+        // grouping our elements by length, print members of each group in order of first letter
+        var groupedFruit = fruits.OrderBy(f => f[0]).GroupBy(f => f.Length);
+
+        foreach (var fruitGroupedByLength in groupedFruit)
+        {
+            foreach (var item in fruitGroupedByLength)
+            {
+                Debug.WriteLine($"{fruitGroupedByLength.Key.ToString()} - {item}");
+            }
+        }
+
+        Debug.WriteLine(new string('*', 40));
+
+        foreach (var fruitGroupedByLength in fruits.GroupBy(f => f.Length).OrderBy(g => g.Key))
+        {
+            foreach (var item in fruitGroupedByLength.OrderBy(s => s[0]))
+            {
+                Debug.WriteLine($"{fruitGroupedByLength.Key.ToString()} - {item}");
+            }
+        }
+    }
 }
 
 public static class MyLinq
@@ -144,6 +247,30 @@ public static class MyLinq
             else
                 continue;
         }
+    }
+
+    public static IEnumerable<T> Debug<T>(this IEnumerable<T> items,string caption = "")
+    {
+        System.Diagnostics.Debug.WriteLine(new string('*', 30) + caption + new string('*', 30));
+        foreach (var item in items)
+        {
+            System.Diagnostics.Debug.WriteLine(item);
+            yield return item;
+        }
+        System.Diagnostics.Debug.WriteLine(new string('*', 80));
+        yield break;
+    }
+
+    public static IEnumerable<T> DebugPrint<T>(this IEnumerable<T> items, string caption = "")
+    {
+        var listReturn = new List<T>();
+        var iterator = items.GetEnumerator();
+        while (iterator.MoveNext())
+        {
+            System.Diagnostics.Debug.WriteLine(iterator.Current);
+            listReturn.Add(iterator.Current);
+        }
+        return listReturn;
     }
 }
 
