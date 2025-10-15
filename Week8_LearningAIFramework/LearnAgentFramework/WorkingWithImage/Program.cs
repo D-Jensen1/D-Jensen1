@@ -52,7 +52,6 @@ ChatMessage message4 = new(ChatRole.User, [
 
 
 // read a bunch of local files
-
 List<AIContent> messageContents = new();
 messageContents.Add(new TextContent("What do you see in these images, describe each picture individually in 30 words or less? Also determine the primary colors in the pictures."));
 foreach (var file in Directory.GetFiles(@"E:\repos\D-Jensen1\Week8_LearningAIFramework\LearnAgentFramework\WorkingWithImage\Images", @" *.jpg"))
@@ -67,13 +66,11 @@ await foreach (var msg in agent.RunStreamingAsync(message5))
     Console.Write(msg);
 }
 
-
 // how much pain is harold hiding?
 var haroldMessage = new ChatMessage(ChatRole.User, [
     new TextContent("Analyse emotion, age, expression,description in plain english only"),
     new DataContent(File.ReadAllBytes(@"..\..\..\Images\image3.webp"),"image/webp")
     ]);
-
 
 //await foreach (var msg in agent.RunStreamingAsync(haroldMessage))
 //{
