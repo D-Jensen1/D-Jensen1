@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LeetArrayTest", "LeetArrayT
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LeetPointerTest", "LeetPointerTest\LeetPointerTest.csproj", "{1D774978-26E5-444D-8B9C-22FE07626464}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LeetHashmapTest", "LeetHashmapTest\LeetHashmapTest.csproj", "{6D6EDDC1-52A9-4E03-9EFF-F10EE1254C90}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,6 +25,10 @@ Global
 		{1D774978-26E5-444D-8B9C-22FE07626464}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1D774978-26E5-444D-8B9C-22FE07626464}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1D774978-26E5-444D-8B9C-22FE07626464}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6D6EDDC1-52A9-4E03-9EFF-F10EE1254C90}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6D6EDDC1-52A9-4E03-9EFF-F10EE1254C90}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6D6EDDC1-52A9-4E03-9EFF-F10EE1254C90}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6D6EDDC1-52A9-4E03-9EFF-F10EE1254C90}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -30,6 +36,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{3DAAB066-978E-4C03-82E0-475F0530F2F6} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 		{1D774978-26E5-444D-8B9C-22FE07626464} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{6D6EDDC1-52A9-4E03-9EFF-F10EE1254C90} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {11B72831-49B5-4637-89BB-ECCDD992E24D}
