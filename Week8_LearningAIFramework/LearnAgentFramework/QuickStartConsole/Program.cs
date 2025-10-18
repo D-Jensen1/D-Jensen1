@@ -107,11 +107,10 @@ if (agents.Count == 0)
 }
 
 
-var thread = persistentAgentsClient.Threads;
-//foreach (var test in thread)
-//{
-
-//}
+foreach (var thread in persistentAgentsClient.Threads.GetThreads())
+{
+    Console.WriteLine(thread.Id);
+}
 //var thread = basicChatAgent.GetNewThread("<threadID>")
 
 //AIAgent agent = await persistentAgentsClient.GetAIAgentAsync("asst_EZCOF7PCwlw90iRtZMAHS1IA");
