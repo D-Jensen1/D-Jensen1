@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LeetStackTest", "LeetStackT
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LeetLinkedListTest", "LeetLinkedListTest\LeetLinkedListTest.csproj", "{31FB0CB6-F440-4C00-B608-DA867029A473}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LeetBinaryTreeGeneralTests", "LeetBinaryTreeGeneralTests\LeetBinaryTreeGeneralTests.csproj", "{4CA739E0-B2FE-4807-9E37-13A6B912F679}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -47,6 +49,10 @@ Global
 		{31FB0CB6-F440-4C00-B608-DA867029A473}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{31FB0CB6-F440-4C00-B608-DA867029A473}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{31FB0CB6-F440-4C00-B608-DA867029A473}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4CA739E0-B2FE-4807-9E37-13A6B912F679}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4CA739E0-B2FE-4807-9E37-13A6B912F679}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4CA739E0-B2FE-4807-9E37-13A6B912F679}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4CA739E0-B2FE-4807-9E37-13A6B912F679}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -58,6 +64,7 @@ Global
 		{EAD7A531-BF59-4910-82EF-3C5DFECA915B} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 		{32FDE8A2-8774-4FE6-B27A-9745ED6D4D27} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 		{31FB0CB6-F440-4C00-B608-DA867029A473} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{4CA739E0-B2FE-4807-9E37-13A6B912F679} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {11B72831-49B5-4637-89BB-ECCDD992E24D}
