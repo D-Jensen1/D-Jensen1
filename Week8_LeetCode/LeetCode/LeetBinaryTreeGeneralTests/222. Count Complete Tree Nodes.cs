@@ -38,10 +38,42 @@ public class _222
 
     public int CountNodes(TreeNode root)
     {
+        if (root == null) return 0;
         
+        int leftHeight = GetLeftHeight(root);
+        int rightHeight = GetRightHeight(root);
+        
+        // If leftmost and rightmost paths have same height, it's a perfect binary tree
+        if (leftHeight == rightHeight)
+        {
+            return (1 << leftHeight) - 1; // 2^height - 1
+        }
+        
+        // Otherwise, recursively count left and right subtrees
+        return 1 + CountNodes(root.left) + CountNodes(root.right);
     }
 
-
+    private int GetLeftHeight(TreeNode node)
+    {
+        int height = 0;
+        while (node != null)
+        {
+            height++;
+            node = node.left;
+        }
+        return height;
+    }
+    
+    private int GetRightHeight(TreeNode node)
+    {
+        int height = 0;
+        while (node != null)
+        {
+            height++;
+            node = node.right;
+        }
+        return height;
+    }
 
     [TestMethod]
     public void TestMethod1_PerfectBinaryTree()
