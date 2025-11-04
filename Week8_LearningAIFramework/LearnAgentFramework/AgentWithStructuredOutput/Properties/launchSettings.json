@@ -1,0 +1,11 @@
+{
+  "profiles": {
+    "AgentWithStructuredOutput": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "AZURE_OPENAI_ENDPOINT": "https://agent-framework-tests-resource.openai.azure.com/",
+        "AZURE_OPENAI_DEPLOYMENT_NAME": "gpt-4o"
+      }
+    }
+  }
+}

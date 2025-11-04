@@ -17,6 +17,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Amazon Agent", "Amazon Agen
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AmazonMcpAgentConsole", "AmazonMcpAgentConsole\AmazonMcpAgentConsole.csproj", "{C5E286FE-6416-497C-9E5A-566886328FCB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AgentWithStructuredOutput", "AgentWithStructuredOutput\AgentWithStructuredOutput.csproj", "{19416647-D68D-457F-A65F-581B24206FD5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -47,6 +49,10 @@ Global
 		{C5E286FE-6416-497C-9E5A-566886328FCB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C5E286FE-6416-497C-9E5A-566886328FCB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C5E286FE-6416-497C-9E5A-566886328FCB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{19416647-D68D-457F-A65F-581B24206FD5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{19416647-D68D-457F-A65F-581B24206FD5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{19416647-D68D-457F-A65F-581B24206FD5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{19416647-D68D-457F-A65F-581B24206FD5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
