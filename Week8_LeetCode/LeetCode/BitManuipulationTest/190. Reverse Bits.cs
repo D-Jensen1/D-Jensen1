@@ -23,9 +23,9 @@ public class _190
     {
         // Test case: n = 00000010100101000001111010011100 -> 00111001011110000010100101000000
         // Input: 43261596, Output: 964176192
-        uint n = 0b00000010100101000001111010011100;
-        uint expected = 0b00111001011110000010100101000000;
-        uint actual = ReverseBits(n);
+        int n = 0b00000010100101000001111010011100;
+        int expected = 0b00111001011110000010100101000000;
+        int actual = ReverseBits(n);
         Assert.AreEqual(expected, actual);
     }
 
@@ -33,10 +33,10 @@ public class _190
     public void TestMethod2_AllOnes()
     {
         // Test case: n = 11111111111111111111111111111111 -> 11111111111111111111111111111111
-        // Input: 4294967295 (uint.MaxValue), Output: 4294967295
-        uint n = 0b11111111111111111111111111111111;
-        uint expected = 0b11111111111111111111111111111111;
-        uint actual = ReverseBits(n);
+        // Input: -1, Output: -1
+        int n = -1; // All bits set (0b11111111111111111111111111111111)
+        int expected = -1;
+        int actual = ReverseBits(n);
         Assert.AreEqual(expected, actual);
     }
 
@@ -45,9 +45,9 @@ public class _190
     {
         // Test case: n = 00000000000000000000000000000000 -> 00000000000000000000000000000000
         // Input: 0, Output: 0
-        uint n = 0;
-        uint expected = 0;
-        uint actual = ReverseBits(n);
+        int n = 0;
+        int expected = 0;
+        int actual = ReverseBits(n);
         Assert.AreEqual(expected, actual);
     }
 
@@ -55,10 +55,10 @@ public class _190
     public void TestMethod4_SingleBitLow()
     {
         // Test case: n = 00000000000000000000000000000001 -> 10000000000000000000000000000000
-        // Input: 1, Output: 2147483648
-        uint n = 1;
-        uint expected = 0b10000000000000000000000000000000;
-        uint actual = ReverseBits(n);
+        // Input: 1, Output: -2147483648 (int.MinValue)
+        int n = 1;
+        int expected = unchecked((int)0b10000000000000000000000000000000); // -2147483648
+        int actual = ReverseBits(n);
         Assert.AreEqual(expected, actual);
     }
 
@@ -66,10 +66,10 @@ public class _190
     public void TestMethod5_SingleBitHigh()
     {
         // Test case: n = 10000000000000000000000000000000 -> 00000000000000000000000000000001
-        // Input: 2147483648, Output: 1
-        uint n = 0b10000000000000000000000000000000;
-        uint expected = 1;
-        uint actual = ReverseBits(n);
+        // Input: -2147483648 (int.MinValue), Output: 1
+        int n = unchecked((int)0b10000000000000000000000000000000); // -2147483648
+        int expected = 1;
+        int actual = ReverseBits(n);
         Assert.AreEqual(expected, actual);
     }
 
@@ -77,10 +77,10 @@ public class _190
     public void TestMethod6_AlternatingPattern()
     {
         // Test case: n = 10101010101010101010101010101010 -> 01010101010101010101010101010101
-        // Input: 2863311530, Output: 1431655765
-        uint n = 0b10101010101010101010101010101010;
-        uint expected = 0b01010101010101010101010101010101;
-        uint actual = ReverseBits(n);
+        // Input: -1431655766, Output: 1431655765
+        int n = unchecked((int)0b10101010101010101010101010101010); // -1431655766
+        int expected = 0b01010101010101010101010101010101; // 1431655765
+        int actual = ReverseBits(n);
         Assert.AreEqual(expected, actual);
     }
 
@@ -88,9 +88,9 @@ public class _190
     public void TestMethod7_FirstHalfOnes()
     {
         // Test case: n = 11111111111111110000000000000000 -> 00000000000000001111111111111111
-        uint n = 0b11111111111111110000000000000000;
-        uint expected = 0b00000000000000001111111111111111;
-        uint actual = ReverseBits(n);
+        int n = unchecked((int)0b11111111111111110000000000000000); // -65536
+        int expected = 0b00000000000000001111111111111111; // 65535
+        int actual = ReverseBits(n);
         Assert.AreEqual(expected, actual);
     }
 
@@ -98,9 +98,9 @@ public class _190
     public void TestMethod8_SecondHalfOnes()
     {
         // Test case: n = 00000000000000001111111111111111 -> 11111111111111110000000000000000
-        uint n = 0b00000000000000001111111111111111;
-        uint expected = 0b11111111111111110000000000000000;
-        uint actual = ReverseBits(n);
+        int n = 0b00000000000000001111111111111111; // 65535
+        int expected = unchecked((int)0b11111111111111110000000000000000); // -65536
+        int actual = ReverseBits(n);
         Assert.AreEqual(expected, actual);
     }
 
@@ -109,9 +109,9 @@ public class _190
     {
         // Test case: n = 00000000000000000000000000000010 -> 01000000000000000000000000000000
         // Input: 2, Output: 1073741824
-        uint n = 2;
-        uint expected = 0b01000000000000000000000000000000;
-        uint actual = ReverseBits(n);
+        int n = 2;
+        int expected = 0b01000000000000000000000000000000; // 1073741824
+        int actual = ReverseBits(n);
         Assert.AreEqual(expected, actual);
     }
 
@@ -120,9 +120,9 @@ public class _190
     {
         // Test case: n = 00000000000000000000000000001000 -> 00010000000000000000000000000000
         // Input: 8, Output: 268435456
-        uint n = 8;
-        uint expected = 0b00010000000000000000000000000000;
-        uint actual = ReverseBits(n);
+        int n = 8;
+        int expected = 0b00010000000000000000000000000000; // 268435456
+        int actual = ReverseBits(n);
         Assert.AreEqual(expected, actual);
     }
 
@@ -131,9 +131,9 @@ public class _190
     {
         // Test case: n = 11000000000000000000000000000011 -> 11000000000000000000000000000011
         // Should be the same when reversed (symmetric)
-        uint n = 0b11000000000000000000000000000011;
-        uint expected = 0b11000000000000000000000000000011;
-        uint actual = ReverseBits(n);
+        int n = unchecked((int)0b11000000000000000000000000000011); // -1073741821
+        int expected = unchecked((int)0b11000000000000000000000000000011); // -1073741821
+        int actual = ReverseBits(n);
         Assert.AreEqual(expected, actual);
     }
 
@@ -141,9 +141,9 @@ public class _190
     public void TestMethod12_OnlyMiddleBits()
     {
         // Test case: n = 00000000000011111111000000000000 -> 00000000000011111111000000000000
-        uint n = 0b00000000000011111111000000000000;
-        uint expected = 0b00000000000011111111000000000000;
-        uint actual = ReverseBits(n);
+        int n = 0b00000000000011111111000000000000; // 16711680
+        int expected = 0b00000000000011111111000000000000; // 16711680
+        int actual = ReverseBits(n);
         Assert.AreEqual(expected, actual);
     }
 
@@ -151,9 +151,9 @@ public class _190
     public void TestMethod13_EdgeBitsOnly()
     {
         // Test case: n = 10000000000000000000000000000001 -> 10000000000000000000000000000001
-        uint n = 0b10000000000000000000000000000001;
-        uint expected = 0b10000000000000000000000000000001;
-        uint actual = ReverseBits(n);
+        int n = unchecked((int)0b10000000000000000000000000000001); // -2147483647
+        int expected = unchecked((int)0b10000000000000000000000000000001); // -2147483647
+        int actual = ReverseBits(n);
         Assert.AreEqual(expected, actual);
     }
 
@@ -161,9 +161,9 @@ public class _190
     public void TestMethod14_QuarterPattern()
     {
         // Test case: n = 11110000000000000000000000000000 -> 00000000000000000000000000001111
-        uint n = 0b11110000000000000000000000000000;
-        uint expected = 0b00000000000000000000000000001111;
-        uint actual = ReverseBits(n);
+        int n = unchecked((int)0b11110000000000000000000000000000); // -268435456
+        int expected = 0b00000000000000000000000000001111; // 15
+        int actual = ReverseBits(n);
         Assert.AreEqual(expected, actual);
     }
 
@@ -171,9 +171,9 @@ public class _190
     public void TestMethod15_ComplexPattern()
     {
         // Test case: n = 11001100110011001100110011001100 -> 00110011001100110011001100110011
-        uint n = 0b11001100110011001100110011001100;
-        uint expected = 0b00110011001100110011001100110011;
-        uint actual = ReverseBits(n);
+        int n = unchecked((int)0b11001100110011001100110011001100); // -858993460
+        int expected = 0b00110011001100110011001100110011; // 858993459
+        int actual = ReverseBits(n);
         Assert.AreEqual(expected, actual);
     }
 
@@ -181,9 +181,9 @@ public class _190
     public void TestMethod16_LargeNumber()
     {
         // Test case: Large decimal number to test the algorithm
-        uint n = 123456789;
-        uint actual = ReverseBits(n);
-        uint doubleReversed = ReverseBits(actual);
+        int n = 123456789;
+        int actual = ReverseBits(n);
+        int doubleReversed = ReverseBits(actual);
         
         // Double reversal should give us back the original number
         Assert.AreEqual(n, doubleReversed);

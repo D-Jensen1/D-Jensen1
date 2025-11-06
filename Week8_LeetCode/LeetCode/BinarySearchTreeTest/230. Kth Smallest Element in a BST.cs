@@ -189,31 +189,6 @@ public class _230
     }
 
     [TestMethod]
-    public void TestMethod7_LeftSkewedBST()
-    {
-        // Test case: Left-skewed BST
-        //     5
-        //    /
-        //   4
-        //  /
-        // 3
-        //  \
-        //   2
-        //  \
-        //   1
-        TreeNode root = new TreeNode(5);
-        root.left = new TreeNode(4);
-        root.left.left = new TreeNode(3);
-        root.left.left.right = new TreeNode(2);
-        root.left.left.right.right = new TreeNode(1);
-        
-        int k = 3;
-        int expected = 3;
-        int actual = KthSmallest(root, k);
-        Assert.AreEqual(expected, actual);
-    }
-
-    [TestMethod]
     public void TestMethod8_RightSkewedBST()
     {
         // Test case: Right-skewed BST
