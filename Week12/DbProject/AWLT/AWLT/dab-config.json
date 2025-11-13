@@ -30,24 +30,26 @@
     }
   },
   "entities": {
-    "Customer": {
+    "ProductCategory": {
       "source": {
-        "object": "SalesLT.Customer",
-        "type": "table",
-        "key-fields": [
-          "CustomerID"
-        ]
+        "object": "SalesLT.usp_ProductCategory",
+        "type": "stored-procedure"
       },
       "graphql": {
         "enabled": true,
+        "operation": "mutation",
         "type": {
-          "singular": "Customer",
-          "plural": "Customers"
+          "singular": "usp_ProductCategory",
+          "plural": "usp_ProductCategories"
         }
       },
       "rest": {
         "enabled": true,
-        "path": "/Customer"
+        "path": "/ProductCategory",
+        "methods": [
+          "get",
+          "post"
+        ]
       },
       "permissions": [
         {
@@ -60,70 +62,10 @@
         }
       ],
       "mappings": {
-        "CompanyName": "CompanyName",
-        "CustomerID": "CustomerID",
-        "EmailAddress": "EmailAddress",
-        "FirstName": "FirstName",
-        "LastName": "LastName",
-        "MiddleName": "MiddleName",
-        "ModifiedDate": "ModifiedDate",
-        "NameStyle": "NameStyle",
-        "PasswordHash": "PasswordHash",
-        "PasswordSalt": "PasswordSalt",
-        "Phone": "Phone",
-        "rowguid": "rowguid",
-        "SalesPerson": "SalesPerson",
-        "Suffix": "Suffix",
-        "Title": "Title"
-      }
-    },
-    "Product": {
-      "source": {
-        "object": "SalesLT.Product",
-        "type": "table",
-        "key-fields": [
-          "ProductID"
-        ]
-      },
-      "graphql": {
-        "enabled": true,
-        "type": {
-          "singular": "Product",
-          "plural": "Products"
-        }
-      },
-      "rest": {
-        "enabled": true,
-        "path": "/Product"
-      },
-      "permissions": [
-        {
-          "role": "anonymous",
-          "actions": [
-            {
-              "action": "*"
-            }
-          ]
-        }
-      ],
-      "mappings": {
-        "Color": "Color",
-        "DiscontinuedDate": "DiscontinuedDate",
-        "ListPrice": "ListPrice",
-        "ModifiedDate": "ModifiedDate",
-        "Name": "Name",
-        "ProductCategoryID": "ProductCategoryID",
         "ProductID": "ProductID",
-        "ProductModelID": "ProductModelID",
+        "ProductName": "ProductName",
         "ProductNumber": "ProductNumber",
-        "rowguid": "rowguid",
-        "SellEndDate": "SellEndDate",
-        "SellStartDate": "SellStartDate",
-        "Size": "Size",
-        "StandardCost": "StandardCost",
-        "ThumbNailPhoto": "ThumbNailPhoto",
-        "ThumbnailPhotoFileName": "ThumbnailPhotoFileName",
-        "Weight": "Weight"
+        "ProductCategory": "ProductCategory"
       }
     }
   }
