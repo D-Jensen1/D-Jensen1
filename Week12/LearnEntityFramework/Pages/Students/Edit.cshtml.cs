@@ -43,6 +43,8 @@ namespace LearnEntityFramework.Pages.Students
         // For more information, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
+            ModelState.Remove("Student.Enrollments");
+
             if (!ModelState.IsValid)
             {
                 return Page();
