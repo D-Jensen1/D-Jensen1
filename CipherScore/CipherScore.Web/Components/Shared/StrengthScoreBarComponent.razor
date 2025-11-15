@@ -1,0 +1,31 @@
+﻿@using CipherScore.ApiService.Services
+@inject PasswordStrengthService PasswordService
+
+<div class="mb-4">
+    <div class="d-flex justify-content-between align-items-center mb-2">
+        <span class="fw-semibold">Password Strength:</span>
+        <span class="badge @PasswordService.GetStrengthBadgeClass(analysisResult.Score) fs-6">@PasswordService.GetStrengthText(analysisResult.Score)</span>
+    </div>
+
+    <div class="progress" style="height: 10px;">
+        <div class="progress-bar @PasswordService.GetStrengthProgressClass(analysisResult.Score)"
+             role="progressbar"
+             style="width: @(analysisResult.Score)%"
+             aria-valuenow="@analysisResult.Score"
+             aria-valuemin="0"
+             aria-valuemax="100">
+        </div>
+    </div>
+
+    <div class="mt-2">
+        <small class="text-muted">Score: @analysisResult.Score out of 100</small>
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public string password { get; set; } = "";
+    
+    [Parameter]
+    public PasswordAnalysisResult analysisResult { get; set; } = new();
+}

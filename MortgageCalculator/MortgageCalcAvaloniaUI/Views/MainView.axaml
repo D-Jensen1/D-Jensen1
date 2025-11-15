@@ -1,0 +1,91 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:MortgageCalcAvaloniaUI.ViewModels"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="550"
+             x:Class="MortgageCalcAvaloniaUI.Views.MainView"
+             x:DataType="vm:MainViewModel">
+  <Design.DataContext>
+    <!-- This only sets the DataContext for the previewer in an IDE,
+         to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
+    <vm:MainViewModel />
+  </Design.DataContext>
+
+  <DockPanel>
+    <!-- Top Header -->
+    <Border DockPanel.Dock="Top" Height="40" BorderBrush="Black" BorderThickness="0,0,0,1">
+      <Label FontSize="20" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center">
+        Welcome to the Mortgage Calculator
+      </Label>
+    </Border>
+
+    <!-- Left Panel -->
+    <Border DockPanel.Dock="Left" Width="300" Background="LightGray" BorderBrush="Black" BorderThickness="0,0,1,0">
+      <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <Grid RowDefinitions="Auto,Auto" Margin="10">
+          <!-- Group 1: Enter Loan Details -->
+          <StackPanel Grid.Row="0" Margin="0,0,0,20">
+            <Grid  Margin="0,0,0,10">
+              <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Enter Loan Details" FontWeight="Bold" VerticalAlignment="Center"/>
+                <Button Content="Save Data" Margin="30,0,0,0"/>
+              </StackPanel>
+
+            </Grid>
+
+            <TextBlock Text="Home Cost:"/>
+            <TextBox Watermark="$400,000" Text="{Binding HomeCost}"/>
+
+            <TextBlock Text="Down Payment:" Margin="0,10,0,0"/>
+            <TextBox Watermark="$40,000" Text="{Binding DownPayment}"/>
+
+            <TextBlock Text="Interest Rate:" Margin="0,10,0,0"/>
+            <TextBox Watermark="4%" Text="{Binding InterestRate}"/>
+
+            <TextBlock Text="Loan Term:" Margin="0,10,0,0"/>
+            <TextBox Watermark="30 (Years)" Text="{Binding LoanTerm}"/>
+          </StackPanel>
+
+          <!-- Group 2: Analyze Loan Data -->
+          <StackPanel Grid.Row="1">
+            <Grid ColumnDefinitions="*,Auto" Margin="0,0,0,10">
+              <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Analyze Loan Data" FontWeight="Bold" VerticalAlignment="Center"/>
+                <Button Content="Load Data" Margin="30,0,0,0"/>
+              </StackPanel>
+
+            </Grid>
+
+            <Grid ColumnDefinitions="Auto,*" Margin="0,15,0,0">
+              <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Amortization Table:" VerticalAlignment="Center" Margin="0,0,30,0"/>
+                <ComboBox>
+                  <ComboBoxItem Content="Monthly"/>
+                  <ComboBoxItem Content="Bi-Weekly"/>
+                </ComboBox>
+              </StackPanel>
+
+            </Grid>
+
+            <Button Content="Calculate Monthly Payments"
+								Margin="0,15,0,0"
+								HorizontalAlignment="Stretch"
+								Padding="5"
+								HorizontalContentAlignment="Center"/>
+          </StackPanel>
+        </Grid>
+      </ScrollViewer>
+    </Border>
+
+    <!-- Right Panel -->
+    <Border Background="White" BorderBrush="Black" BorderThickness="0,0,0,0">
+      <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel Margin="20">
+          <TextBlock Text="Display Information Here" FontSize="18" FontWeight="Bold"/>
+          <!-- Output content goes here -->
+        </StackPanel>
+      </ScrollViewer>
+    </Border>
+  </DockPanel>
+</UserControl>

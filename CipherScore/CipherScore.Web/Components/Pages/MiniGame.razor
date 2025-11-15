@@ -1,0 +1,199 @@
+﻿@page "/mini-game"
+@using CipherScore.ApiService.Services
+@inject PasswordStrengthService PasswordService
+@inject CipherApiClient ApiClient
+@rendermode InteractiveServer
+
+<PageTitle>CipherScore - Password Strength Checker</PageTitle>
+
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="text-center mb-4">
+                <h1 class="display-4 text-primary">🕹️ Guess the Password Strength</h1>
+                <p class="lead text-muted">Guess how strong your password is</p>
+            </div>
+
+            <div class="card shadow-lg">
+                <div class="card-body p-4">
+                    <div class="mb-4">
+                        <label for="passwordInput" class="form-label fs-5 fw-semibold">Enter Your Password</label>
+                        <div class="input-group input-group-lg">
+                            <input class="form-control" 
+                                   id="passwordInput"
+                                   placeholder="Enter password to crack..."
+                                   @bind="password" 
+                                   @oninput="OnPasswordChanged" />
+                        </div>
+                    </div>
+                    <div class="mt-4 text-center">
+                        <button class="btn btn-outline-secondary btn-lg ms-2" @onclick="ClearPassword">
+                            <i class="bi bi-arrow-clockwise me-2"></i>Reset
+                        </button>
+                    </div>
+                    <!-- Azure Storage Section -->
+                    <div class="mt-4 p-3 border rounded bg-light">
+                        <h6 class="mb-3">💾 Save to Azure Storage</h6>
+                        <div class="mb-3">
+                            <label class="form-label">How strong do you think this password is?</label>
+                            <select class="form-select" @bind="userGuess">
+                                <option value="">-- Select your guess --</option>
+                                <option value="Very Weak">Very Weak</option>
+                                <option value="Weak">Weak</option>
+                                <option value="Moderate">Moderate</option>
+                                <option value="Strong">Strong</option>
+                                <option value="Very Strong">Very Strong</option>
+                            </select>
+                        </div>
+                        <button class="btn btn-primary" @onclick="ShowResults" disabled="@(string.IsNullOrEmpty(password) || string.IsNullOrEmpty(userGuess))">
+                            Submit Result
+                        </button>
+                        <button class="btn btn-primary" 
+                                @onclick="async () => { ShowResults(); await SubmitToAzure(); }" 
+                                disabled="@(isSubmitting || string.IsNullOrEmpty(password) || string.IsNullOrEmpty(userGuess))">
+                            @if (isSubmitting)
+                            {
+                                <span class="spinner-border spinner-border-sm me-2"></span>
+                            }
+                            <i class="bi bi-cloud-upload me-2"></i>Submit Result to Azure
+                        </button>
+
+                        @if (submissionResult != null)
+                        {
+                            <div class="alert alert-success mt-3">
+                                <strong>✓ Submitted!</strong>
+                                <ul class="mb-0 mt-2">
+                                    <li>Strength: @submissionResult.StrengthRating</li>
+                                    <li>Time to crack: @submissionResult.BruteForceTime</li>
+                                    <li>Your guess accuracy: @submissionResult.GuessAccuracy</li>
+                                </ul>
+                            </div>
+                        }
+
+                        @if (!string.IsNullOrEmpty(errorMessage))
+                        {
+                            <div class="alert alert-danger mt-3">
+                                @errorMessage
+                            </div>
+                        }
+                    </div>
+                    <!-- End Azure Storage Section -->
+                    @if (showPasswordResults)
+                    {
+                        <CipherScore.Web.Components.Shared.StrengthScoreBarComponent password="@password" analysisResult="@analysisResult" />
+                        <CipherScore.Web.Components.Shared.SuggestionsComponent analysisResult="@analysisResult" />
+                        <CipherScore.Web.Components.Shared.PasswordDetailsComponent password="@password" />
+                    }
+                </div>
+            </div>
+
+            <div class="mt-4 text-center">
+                @* 
+                <small class="text-muted">
+                    <i class="bi bi-info-circle me-1"></i>
+                    Your password is analyzed locally for strength. Breach checking uses HaveIBeenPwned API with k-anonymity for security.
+                </small>
+                *@
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    private string password = "";
+    private bool showPassword = false;
+    private bool showPasswordResults = false;
+    private bool isCheckingBreach = false;
+    private PasswordAnalysisResult analysisResult = new();
+    private BreachCheckResult? breachCheckResult;
+
+    // NEW: Variables for Azure Storage submission
+    private string userGuess = "";
+    private bool isSubmitting = false;
+    private PasswordSubmissionResult? submissionResult;
+    private string errorMessage = "";
+
+    private void OnPasswordChanged(ChangeEventArgs e)
+    {
+        password = e.Value?.ToString() ?? "";
+        AnalyzePassword();
+
+        // Clear previous breach check when password changes
+        breachCheckResult = null;
+        submissionResult = null; // Clear previous submission result
+        errorMessage = "";
+        StateHasChanged();
+    }
+
+    private void CheckPassword()
+    {
+        AnalyzePassword();
+    }
+
+    private async Task CheckForBreaches()
+    {
+        if (string.IsNullOrEmpty(password)) return;
+
+        try
+        {
+            isCheckingBreach = true;
+            breachCheckResult = await ApiClient.CheckPasswordBreachAsync(password);
+        }
+        catch (Exception)
+        {
+            // If API fails, show a fallback message
+            breachCheckResult = new BreachCheckResult(false, 0, null, "Service temporarily unavailable");
+        }
+        finally
+        {
+            isCheckingBreach = false;
+            StateHasChanged();
+        }
+    }
+
+    // NEW: Method to submit password to Azure Storage
+    private async Task SubmitToAzure()
+    {
+        if (string.IsNullOrEmpty(password)) return;
+
+        try
+        {
+            isSubmitting = true;
+            errorMessage = "";
+            submissionResult = null;
+
+            submissionResult = await ApiClient.SubmitPasswordAsync(password, userGuess);
+        }
+        catch (Exception ex)
+        {
+            errorMessage = $"Failed to submit: {ex.Message}";
+        }
+        finally
+        {
+            isSubmitting = false;
+            StateHasChanged();
+        }
+    }
+
+    private void ClearPassword()
+    {
+        password = "";
+        analysisResult = new PasswordAnalysisResult();
+        breachCheckResult = null;
+        submissionResult = null;
+        userGuess = "";
+        errorMessage = "";
+        showPasswordResults = false;
+        StateHasChanged();
+    }
+
+    private void AnalyzePassword()
+    {
+        analysisResult = PasswordService.AnalyzePassword(password);
+    }
+
+    private void ShowResults()
+    {
+        showPasswordResults = true;
+    }
+}

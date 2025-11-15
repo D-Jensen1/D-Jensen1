@@ -1,0 +1,286 @@
+﻿@page "/"
+@using CipherScore.ApiService.Services
+@using Markdig
+@inject PasswordStrengthService PasswordService
+@inject CipherApiClient ApiClient
+@rendermode InteractiveServer
+
+<PageTitle>CipherScore - Password Strength Checker</PageTitle>
+
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="text-center mb-4">
+                <h1 class="display-4 text-primary">🔐 CipherScore</h1>
+                <p class="lead text-muted">Check the strength of your passwords and detect data breaches</p>
+            </div>
+
+            <div class="card shadow-lg">
+                <div class="card-body p-4">
+                    <div class="mb-4">
+                        <label for="passwordInput" class="form-label fs-5 fw-semibold">Enter Your Password</label>
+                        <div class="input-group input-group-lg">
+                            <input type="@(showPassword ? "text" : "password")"
+                                   class="form-control"
+                                   id="passwordInput"
+                                   placeholder="Enter password to check strength and breaches..."
+                                   @bind="password"
+                                   @oninput="OnPasswordChanged" />
+                            <button class="btn btn-outline-secondary"
+                                    type="button"
+                                    @onclick="TogglePasswordVisibility">
+                                <i class="@(showPassword ? "bi bi-eye-slash" : "bi bi-eye")"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Password Generator Section -->
+                    <CipherScore.Web.Components.Shared.PasswordGeneratorComponent @ref="passwordGenerator"
+                                                                                  IsExpanded="@showPasswordGenerator"
+                                                                                  IsExpandedChanged="@((bool expanded) => showPasswordGenerator = expanded)"
+                                                                                  OnPasswordGenerated="@UseGeneratedPassword" />
+                    <!-- End Password Generator Section -->
+
+                    <div class="mt-4 text-center">
+                        <button class="btn btn-warning btn-lg ms-2" @onclick="CheckForBreaches" disabled="@isCheckingBreach">
+                            @if (isCheckingBreach)
+                            {
+                                <span class="spinner-border spinner-border-sm me-2"></span>
+                            }
+                            <i class="bi bi-exclamation-triangle me-2"></i>Check Breaches
+                        </button>
+                        <button class="btn btn-info btn-lg ms-2" @onclick="AnalyzeWithAI" disabled="@isAnalyzingWithAI">
+                            @if (isAnalyzingWithAI)
+                            {
+                                <span class="spinner-border spinner-border-sm me-2"></span>
+                            }
+                            AI Analysis
+                        </button>
+                        <button class="btn btn-outline-secondary btn-lg ms-2" @onclick="ClearPassword">
+                            <i class="bi bi-arrow-clockwise me-2"></i>Clear
+                        </button>
+
+                    </div>
+                    @if (!string.IsNullOrEmpty(password))
+                    {
+                        <!-- AI Analysis Result -->
+                        @if (aiAnalysisResult != null && !string.IsNullOrEmpty(aiAnalysisResult.AiSuggestions))
+                        {
+                            <div class="alert alert-info mt-4">
+                                <div class="d-flex align-items-start">
+                                    <div class="flex-grow-1">
+                                        <h6><strong>AI Password Analysis</strong></h6>
+                                        <div class="markdown-content">
+                                            @((MarkupString)Markdown.ToHtml(aiAnalysisResult.AiSuggestions))
+                                        </div>
+                                        @if (aiAnalysisResult.ElapsedMilliseconds > 0)
+                                        {
+                                            <small class="text-muted">Analysis completed in @FormatElapsedTime(aiAnalysisResult.ElapsedMilliseconds)</small>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                        <!-- End AI Analysis Result -->
+
+                        <!-- Breach Check Alert -->
+                        @if (breachCheckResult != null)
+                        {
+                            <div class="alert @(breachCheckResult.IsBreached ? "alert-danger" : "alert-success") mb-4">
+                                <div class="d-flex align-items-center">
+                                    <i class="bi @(breachCheckResult.IsBreached ? "bi-exclamation-triangle-fill" : "bi-shield-check-fill") fs-4 me-3"></i>
+                                    <div class="flex-grow-1">
+                                        @if (breachCheckResult.IsBreached)
+                                        {
+                                            <text>
+                                                <strong>⚠️ Security Alert:</strong> This password has been found in <strong>@breachCheckResult.BreachCount</strong> data breach(es)!
+                                                <br /><small>We strongly recommend changing this password immediately.</small>
+                                            </text>
+                                        }
+                                        else
+                                        {
+                                            <text>
+                                                <strong>✅ Secure:</strong> This password was not found in known data breaches.
+                                            </text>
+                                        }
+                                        @if (!string.IsNullOrEmpty(breachCheckResult.Source))
+                                        {
+                                            <br />
+                                
+                                            <small class="text-muted">Verified via @breachCheckResult.Source</small>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                        <!-- End Breach Check Alert -->
+
+                        <CipherScore.Web.Components.Shared.StrengthScoreBarComponent password="@password" analysisResult="@analysisResult" />
+                        <CipherScore.Web.Components.Shared.SuggestionsComponent analysisResult="@analysisResult" />
+                        <CipherScore.Web.Components.Shared.PasswordDetailsComponent password="@password" />
+                    }
+                    else
+                    {
+                        <div class="text-center py-5">
+                            <i class="bi bi-shield-lock display-1 text-muted"></i>
+                            <p class="text-muted mt-3">Enter a password above to see its strength analysis and breach status</p>
+                        </div>
+                    }
+                </div>
+            </div>
+
+            <div class="mt-4 text-center">
+                <small class="text-muted">
+                    <i class="bi bi-info-circle me-1"></i>
+                    Your password is analyzed locally for strength. Breach checking uses HaveIBeenPwned API with k-anonymity for security.
+                </small>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    private string password = "";
+    private bool showPassword = false;
+    private bool isCheckingBreach = false;
+    private bool isAnalyzingWithAI = false;
+    private PasswordAnalysisResult analysisResult = new();
+    private BreachCheckResult? breachCheckResult;
+    private PasswordEvaluationResult? aiAnalysisResult;
+
+    // Variables for Azure Storage submission
+    private string userGuess = "";
+    private bool isSubmitting = false;
+    private PasswordSubmissionResult? submissionResult;
+    private string errorMessage = "";
+
+    // Password generator component reference
+    private bool showPasswordGenerator = false;
+    private CipherScore.Web.Components.Shared.PasswordGeneratorComponent? passwordGenerator;
+
+    private void OnPasswordChanged(ChangeEventArgs e)
+    {
+        password = e.Value?.ToString() ?? "";
+        AnalyzePassword();
+
+        // Clear previous breach check when password changes
+        breachCheckResult = null;
+        aiAnalysisResult = null;
+        submissionResult = null;
+        errorMessage = "";
+        StateHasChanged();
+    }
+
+    private void CheckPassword()
+    {
+        AnalyzePassword();
+    }
+
+    private async Task CheckForBreaches()
+    {
+        if (string.IsNullOrEmpty(password)) return;
+
+        try
+        {
+            isCheckingBreach = true;
+            breachCheckResult = await ApiClient.CheckPasswordBreachAsync(password);
+        }
+        catch (Exception)
+        {
+            // If API fails, show a fallback message
+            breachCheckResult = new BreachCheckResult(false, 0, null, "Service temporarily unavailable");
+        }
+        finally
+        {
+            isCheckingBreach = false;
+            StateHasChanged();
+        }
+    }
+
+    private async Task AnalyzeWithAI()
+    {
+        if (string.IsNullOrEmpty(password)) return;
+
+        try
+        {
+            isAnalyzingWithAI = true;
+            aiAnalysisResult = await ApiClient.GetAiSuggestionsAsync(password);
+        }
+        catch (Exception ex)
+        {
+            // If API fails, show a fallback message
+            aiAnalysisResult = new PasswordEvaluationResult(
+                $"AI analysis temporarily unavailable: {ex.Message}",
+                0  // ElapsedMilliseconds
+            );
+        }
+        finally
+        {
+            isAnalyzingWithAI = false;
+            StateHasChanged();
+        }
+    }
+
+    private async Task SubmitToAzure()
+    {
+        if (string.IsNullOrEmpty(password)) return;
+
+        try
+        {
+            isSubmitting = true;
+            errorMessage = "";
+            submissionResult = null;
+
+            submissionResult = await ApiClient.SubmitPasswordAsync(password, userGuess);
+        }
+        catch (Exception ex)
+        {
+            errorMessage = $"Failed to submit: {ex.Message}";
+        }
+        finally
+        {
+            isSubmitting = false;
+            StateHasChanged();
+        }
+    }
+
+    private void ClearPassword()
+    {
+        password = "";
+        analysisResult = new PasswordAnalysisResult();
+        breachCheckResult = null;
+        aiAnalysisResult = null;
+        submissionResult = null;
+        userGuess = "";
+        errorMessage = "";
+        passwordGenerator?.Clear();
+        StateHasChanged();
+    }
+
+    private void TogglePasswordVisibility()
+    {
+        showPassword = !showPassword;
+    }
+
+    private void UseGeneratedPassword(string generatedPassword)
+    {
+        password = generatedPassword;
+        AnalyzePassword();
+        showPassword = true; // Show the password so user can see it
+        StateHasChanged();
+    }
+
+    private void AnalyzePassword()
+    {
+        analysisResult = PasswordService.AnalyzePassword(password);
+    }
+
+    private string FormatElapsedTime(long milliseconds)
+    {
+        if (milliseconds >= 1000)
+        {
+            return $"{(milliseconds / 1000.0):F2} seconds";
+        }
+        return $"{milliseconds} ms";
+    }
+}

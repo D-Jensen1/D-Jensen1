@@ -1,0 +1,25 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <UserSecretsId>f863e334-d495-492f-b725-b1d74c885c99</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CipherScore.ServiceDefaults\CipherScore.ServiceDefaults.csproj" />
+    <ProjectReference Include="..\CipherScore.Shared\CipherScore.Shared.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Aspire.Azure.Data.Tables" Version="9.5.2" />
+    <PackageReference Include="Azure.AI.OpenAI" Version="1.0.0-beta.7" />
+	<PackageReference Include="Azure.Data.Tables" Version="12.11.0" />
+    <PackageReference Include="Azure.Identity" Version="1.17.0" />
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.2" />
+    <PackageReference Include="ReadablePassphrase" Version="1.4.2" />
+    <PackageReference Include="Rnd" Version="10.0.2" />
+  </ItemGroup>
+
+</Project>

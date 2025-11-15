@@ -1,0 +1,29 @@
+﻿@using CipherScore.ApiService.Services
+@inject PasswordStrengthService PasswordService
+
+<div class="row">
+    <div class="col-md-6">
+        <h6 class="text-success">✓ Strengths</h6>
+        <ul class="list-unstyled">
+            @foreach (var strength in analysisResult.Strengths)
+            {
+                <li class="text-success"><i class="bi bi-check-circle-fill me-2"></i>@strength</li>
+            }
+        </ul>
+    </div>
+
+    <div class="col-md-6">
+        <h6 class="text-warning">⚠ Suggestions</h6>
+        <ul class="list-unstyled">
+            @foreach (var suggestion in analysisResult.Suggestions)
+            {
+                <li class="text-warning"><i class="bi bi-exclamation-triangle-fill me-2"></i>@suggestion</li>
+            }
+        </ul>
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public PasswordAnalysisResult analysisResult { get; set; } = new();
+}
